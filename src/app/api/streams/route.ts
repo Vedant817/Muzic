@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from 'zod';
 import { prismaClient } from "@/lib/db";
 import { YT_REGEX } from "@/lib/utils";
+import youtubesearchapi from "youtube-search-api"
 
 const CreateStreamSchema = z.object({
     creatorId: z.string(),
@@ -31,12 +32,19 @@ export async function POST(req: NextRequest) {
             })
         }
 
+        const response = await youtubesearchapi.GetVideoDetails(extractedId)
+        const thumbnails = response.thumbnail.thumbnails;
+        thumbnails.sort((a: { width: number }, b: { width: number }) => a.width < b.width ? -1 : 1);
+
         const stream = await prismaClient.stream.create({
             data: {
                 userId: data.creatorId,
                 url: data.url,
                 extractedId,
-                type: 'Youtube'
+                type: 'Youtube',
+                title: response.title ?? 'Cannot Find the title',
+                smallImg: (thumbnails.length > 1 ? thumbnails[thumbnails.length - 2].url : thumbnails[thumbnails.length - 1].url) ?? "https://cdn.pixabay.com/photo/2024/02/28/07/42/european-shorthair-8601492_640.jpg",
+                bigImg: thumbnails[thumbnails.length - 1].url ?? "https://cdn.pixabay.com/photo/2024/02/28/07/42/european-shorthair-8601492_640.jpg"
             }
         })
 
@@ -45,6 +53,7 @@ export async function POST(req: NextRequest) {
             id: stream.id
         }, { status: 201 })
     } catch (error) {
+        console.log(error);
         return NextResponse.json({
             message: 'Error while adding a stream',
         }, {
