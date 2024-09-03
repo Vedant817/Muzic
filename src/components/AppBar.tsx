@@ -11,8 +11,8 @@ const AppBar = () => {
             </div>
             <div>
                 {session.data?.user ?
-                    <button className="bg-purple-600 text-white hover:bg-purple-700 p-1 rounded-md" onClick={() => signOut()}>SignOut</button>
-                    : <button className="bg-purple-600 text-white hover:bg-purple-700 p-1 rounded-md" onClick={() => signIn()}>SignIn</button>
+                    <button className="bg-purple-600 text-white hover:bg-purple-700 p-2 rounded-md" onClick={() => signOut()}>SignOut</button>
+                    : <button className="bg-purple-600 text-white hover:bg-purple-700 p-2 rounded-md" onClick={() => signIn()}>SignIn</button>
                 }
             </div>
         </div>

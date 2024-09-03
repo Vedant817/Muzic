@@ -4,10 +4,10 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Users, Radio, Headphones } from "lucide-react"
 import AppBar from "@/components/AppBar";
-import Image from "next/image";
+import useRedirect from "@/hooks/useRedirect";
 
 export default function Home() {
-  // useRedirect();
+  useRedirect();
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900">
