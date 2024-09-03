@@ -5,14 +5,14 @@ import React from 'react'
 const AppBar = () => {
     const session = useSession()
     return (
-        <div className='flex justify-between'>
-            <div>
+        <div className="flex justify-between px-20 pt-4">
+            <div className="text-lg font-bold flex flex-col justify-center text-white">
                 Muzic
             </div>
             <div>
                 {session.data?.user ?
-                    <button className='m-2 p-2 bg-red-400' onClick={() => signOut()}>SignOut</button>
-                    : <button className='m-2 p-2 bg-blue-400' onClick={() => signIn()}>SignIn</button>
+                    <button className="bg-purple-600 text-white hover:bg-purple-700 p-1 rounded-md" onClick={() => signOut()}>SignOut</button>
+                    : <button className="bg-purple-600 text-white hover:bg-purple-700 p-1 rounded-md" onClick={() => signIn()}>SignIn</button>
                 }
             </div>
         </div>
